@@ -59,6 +59,8 @@ private slots:
 
     void on_actionWordWrap_triggered();
 
+    void on_actionFont_triggered();
+
 private:
     Ui::MainWindow *ui;
 

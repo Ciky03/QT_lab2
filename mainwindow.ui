@@ -444,6 +444,9 @@
    </property>
   </action>
   <action name="actionDisplayNum">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="res.qrc">
      <normaloff>:/img/displayNum.png</normaloff>:/img/displayNum.png</iconset>

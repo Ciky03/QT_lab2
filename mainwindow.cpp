@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QTextStream>
 #include <QColorDialog>
+#include <QFontDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -34,6 +35,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionCopy->setEnabled(false);
     ui->actionCut->setEnabled(false);
     ui->actionPaste->setEnabled(false);
+
+    // 初始化<自动换行>复选按钮
+    QPlainTextEdit::LineWrapMode mode = ui->textEdit->lineWrapMode();
+    if (mode == QTextEdit::NoWrap) {
+        ui->textEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+        ui->actionWordWrap->setChecked(false);
+    } else {
+        ui->textEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
+        ui->actionWordWrap->setChecked(true);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -278,18 +289,23 @@ void MainWindow::on_actionFontColor_triggered()
 
 void MainWindow::on_actionWordWrap_triggered()
 {
-
+    QPlainTextEdit::LineWrapMode mode = ui->textEdit->lineWrapMode();
+    if (mode == QTextEdit::NoWrap) {
+        ui->textEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+        ui->actionWordWrap->setChecked(true);
+    } else {
+        ui->textEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
+        ui->actionWordWrap->setChecked(false);
+    }
 }
 
 
-
-
-
-
-
-
-
-
-
-
+void MainWindow::on_actionFont_triggered()
+{
+    bool ok = false;
+    QFont font = QFontDialog::getFont(&ok, this);
+    if (ok) {
+        ui->textEdit->setFont(font);
+    }
+}
 
