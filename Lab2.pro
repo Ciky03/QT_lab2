@@ -10,15 +10,18 @@ CONFIG += c++17
 
 SOURCES += \
     aboutdialog.cpp \
+    finddialog.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     aboutdialog.h \
+    finddialog.h \
     mainwindow.h
 
 FORMS += \
     aboutdialog.ui \
+    finddialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.
