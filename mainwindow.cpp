@@ -88,3 +88,34 @@ void MainWindow::on_actionOpen_triggered()
 
 }
 
+
+void MainWindow::on_actionSave_triggered()
+{
+    // 判断是否打开了文件
+    if (filePath.isEmpty()) {
+        filePath = QFileDialog::getSaveFileName(this, "保存文件", ".", tr("Text files(*.txt)"));
+        if (filePath.isEmpty()) {
+            QMessageBox::warning(this, "保存失败", "未选择保存路径");
+            return;
+        }
+    }
+
+    QFile file(filePath);
+
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, "保存失败", "无法打开文件");
+        return;
+    }
+
+    // 写入文件
+    QTextStream out(&file);
+    QString text = ui->textEdit->toPlainText();
+    out << text;
+    file.flush();
+    file.close();
+
+    // 设置title
+    this->setWindowTitle(QFileInfo(filePath).absoluteFilePath());
+
+}
+
