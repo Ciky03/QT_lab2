@@ -49,3 +49,12 @@ void MainWindow::on_actionReplace_triggered()
     dlg.exec();
 }
 
+
+void MainWindow::on_actionNew_triggered()
+{
+    // 内容清空
+    ui->textEdit->clear();
+    // 设置title
+    this->setWindowTitle("新建文本文件 - 编辑器");
+}
+
