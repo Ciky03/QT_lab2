@@ -27,10 +27,14 @@ private slots:
 
     void on_actionNew_triggered();
 
+    void on_actionOpen_triggered();
+
 private:
     Ui::MainWindow *ui;
 
     QLabel statusCursorLabel;
     QLabel statusLabel;
+
+    QString filePath;
 };
 #endif // MAINWINDOW_H

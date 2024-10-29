@@ -3,6 +3,9 @@
 #include "aboutdialog.h"
 #include "finddialog.h"
 #include "replacedialog.h"
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -56,5 +59,32 @@ void MainWindow::on_actionNew_triggered()
     ui->textEdit->clear();
     // 设置title
     this->setWindowTitle("新建文本文件 - 编辑器");
+}
+
+
+void MainWindow::on_actionOpen_triggered()
+{
+    // 打开文件
+    QString fileName = QFileDialog::getOpenFileName(this, "打开文件", ".", tr("Text files(*.txt) ;; All (*.*)"));
+    QFile file(fileName);
+
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        QMessageBox::warning(this, "..", "打开文件失败");
+        return;
+    }
+
+    filePath = fileName;
+
+    // 读文件内容
+    QTextStream in(&file);
+    QString text = in.readAll();
+    ui->textEdit->insertPlainText(text);
+
+    // 关闭文件
+    file.close();
+
+    // 设置title
+    this->setWindowTitle(QFileInfo(fileName).absoluteFilePath());
+
 }
 
