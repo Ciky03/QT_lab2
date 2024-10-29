@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "aboutdialog.h"
 #include "finddialog.h"
+#include "replacedialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,6 +39,13 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionFind_triggered()
 {
     FindDialog dlg;
+    dlg.exec();
+}
+
+
+void MainWindow::on_actionReplace_triggered()
+{
+    ReplaceDialog dlg;
     dlg.exec();
 }
 
