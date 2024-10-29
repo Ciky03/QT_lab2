@@ -33,6 +33,8 @@ private slots:
 
     void on_actionSaveAs_triggered();
 
+    void on_textEdit_textChanged();
+
 private:
     Ui::MainWindow *ui;
 
@@ -40,5 +42,8 @@ private:
     QLabel statusLabel;
 
     QString filePath;
+    bool textChange;
+
+    bool userEditConfirm();
 };
 #endif // MAINWINDOW_H

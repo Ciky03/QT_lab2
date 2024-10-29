@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // 初始化
+    textChange = false;
+
     statusLabel.setMinimumWidth(150);
     statusLabel.setText("length:" + QString::number(0) + "       lines:" + QString::number(1));
     ui->statusbar->addPermanentWidget(&statusLabel);
@@ -55,15 +58,26 @@ void MainWindow::on_actionReplace_triggered()
 
 void MainWindow::on_actionNew_triggered()
 {
+    // 新建文件前需确认是否保存文件
+    if (!userEditConfirm())
+        return;
+
+    filePath = "";
     // 内容清空
     ui->textEdit->clear();
     // 设置title
     this->setWindowTitle("新建文本文件 - 编辑器");
+
+    textChange = false;
 }
 
 
 void MainWindow::on_actionOpen_triggered()
 {
+    // 打开文件前需确认是否保存文件
+    if (!userEditConfirm())
+        return;
+
     // 打开文件
     QString fileName = QFileDialog::getOpenFileName(this, "打开文件", ".", tr("Text files(*.txt) ;; All (*.*)"));
     QFile file(fileName);
@@ -86,6 +100,7 @@ void MainWindow::on_actionOpen_triggered()
     // 设置title
     this->setWindowTitle(QFileInfo(fileName).absoluteFilePath());
 
+    textChange = false;
 }
 
 
@@ -116,7 +131,7 @@ void MainWindow::on_actionSave_triggered()
 
     // 设置title
     this->setWindowTitle(QFileInfo(filePath).absoluteFilePath());
-
+    textChange = false;
 }
 
 
@@ -146,5 +161,37 @@ void MainWindow::on_actionSaveAs_triggered()
     // 更新当前文件路径和窗口标题
     filePath = fileName;
     this->setWindowTitle(QFileInfo(filePath).absoluteFilePath());
+}
+
+
+void MainWindow::on_textEdit_textChanged()
+{
+    if (!textChange) {
+        this->setWindowTitle("*" + this->windowTitle());
+        textChange = true;
+    }
+}
+
+bool MainWindow::userEditConfirm()
+{
+    QString path = (filePath != "") ? filePath : "无标题.txt";
+
+    QMessageBox msg(this);
+    msg.setIcon(QMessageBox::Question);
+    msg.setWindowTitle("...");
+    msg.setText(QString("是否将更改保存到\n") + "\"" + path + "\"?");
+    msg.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+    int r = msg.exec();
+    switch (r) {
+    case QMessageBox::Yes:
+        on_actionSave_triggered();
+        break;
+    case QMessageBox::No:
+        textChange = false;
+        break;
+    case QMessageBox::Cancel:
+        return false;
+    }
+    return true;
 }
 
