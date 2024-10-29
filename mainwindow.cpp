@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QColorDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -250,4 +251,45 @@ void MainWindow::on_textEdit_redoAvailable(bool b)
 {
     ui->actionRedo->setEnabled(b);
 }
+
+
+void MainWindow::on_actionEditBackgroundColor_triggered()
+{
+    QColor color = QColorDialog::getColor(Qt::black, this, "选择颜色");
+    if (color.isValid()) {
+        ui->textEdit->setStyleSheet(QString("QPlainTextEdit {background-color: %1}").arg(color.name()));
+    }
+}
+
+
+void MainWindow::on_actionFontBackgroundColor_triggered()
+{
+
+}
+void MainWindow::on_actionFontColor_triggered()
+{
+    QColor color = QColorDialog::getColor(Qt::black, this, "选择颜色");
+    if (color.isValid()) {
+        ui->textEdit->setStyleSheet(QString("QPlainTextEdit {color: %1}").arg(color.name()));
+    }
+
+}
+
+
+void MainWindow::on_actionWordWrap_triggered()
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
