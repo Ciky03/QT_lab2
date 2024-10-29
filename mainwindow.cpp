@@ -119,3 +119,32 @@ void MainWindow::on_actionSave_triggered()
 
 }
 
+
+void MainWindow::on_actionSaveAs_triggered()
+{
+    // 提示用户选择另存为的文件路径和文件名
+    QString fileName = QFileDialog::getSaveFileName(this, "另存为", "./untitled.txt", tr("Text files(*.txt)"));
+    if (fileName.isEmpty()) {
+        QMessageBox::warning(this, "保存失败", "未选择保存路径");
+        return;
+    }
+
+    // 打开文件进行保存
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, "保存失败", "无法打开文件");
+        return;
+    }
+
+    // 将文本编辑器内容写入文件
+    QTextStream out(&file);
+    QString text = ui->textEdit->toPlainText();
+    out << text;
+    file.flush();
+    file.close();
+
+    // 更新当前文件路径和窗口标题
+    filePath = fileName;
+    this->setWindowTitle(QFileInfo(filePath).absoluteFilePath());
+}
+
