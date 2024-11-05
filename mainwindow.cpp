@@ -65,7 +65,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_actionFind_triggered()
 {
-    FindDialog dlg;
+    FindDialog dlg(this, ui->textEdit);
     dlg.exec();
 }
 
