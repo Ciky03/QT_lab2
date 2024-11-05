@@ -16,10 +16,19 @@ public:
     explicit ReplaceDialog(QWidget *parent = nullptr, QPlainTextEdit * textEdit = nullptr);
     ~ReplaceDialog();
 
+private slots:
+    void on_btFindNext_clicked();
+
+    void on_btReplace_clicked();
+
+    void on_btReplaceAll_clicked();
+
+    void on_btCancel_clicked();
+
 private:
     Ui::ReplaceDialog *ui;
 
-    QPlainTextEdit *textEdit;
+    QPlainTextEdit *pTextEdit;
 };
 
 #endif // REPLACEDIALOG_H

@@ -22,6 +22,8 @@ void FindDialog::on_btFindNext_clicked()
 {
     // 获取输入的要查找的文本
     QString target = ui->searchText->text();
+    if (target == "" || pTextEdit == nullptr)
+        return;
 
     // 文本框里所有的内容
     QString text = pTextEdit->toPlainText();
