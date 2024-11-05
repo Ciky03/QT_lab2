@@ -191,6 +191,10 @@ void MainWindow::on_textEdit_textChanged()
         this->setWindowTitle("*" + this->windowTitle());
         textChange = true;
     }
+
+    statusLabel.setText("length:" + QString::number(ui->textEdit->toPlainText().length()) +
+                        "       lines:" + QString::number(ui->textEdit->document()->lineCount()));
+
 }
 
 bool MainWindow::userEditConfirm()
@@ -340,5 +344,21 @@ void MainWindow::on_actionExit_triggered()
 {
     if (userEditConfirm())
         exit(0);
+}
+
+
+void MainWindow::on_textEdit_cursorPositionChanged()
+{
+    QTextCursor cursor = ui->textEdit->textCursor();
+
+    // 获取当前行号（从0开始计数，+1使其从1开始计数）
+    int lineNumber = cursor.blockNumber() + 1;
+
+    // 获取当前列号（从0开始计数，+1使其从1开始计数）
+    int columnNumber = cursor.positionInBlock() + 1;
+
+    // 显示行号和列号
+    statusCursorLabel.setText("Ln:" + QString::number(lineNumber) +
+                              "       Col:" + QString::number(columnNumber));
 }
 
