@@ -335,3 +335,10 @@ void MainWindow::on_actionSelectAll_triggered()
     ui->textEdit->selectAll();
 }
 
+
+void MainWindow::on_actionExit_triggered()
+{
+    if (userEditConfirm())
+        exit(0);
+}
+
