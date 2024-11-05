@@ -214,6 +214,9 @@
    <property name="toolTip">
     <string>退出</string>
    </property>
+   <property name="shortcut">
+    <string>Esc</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
    </property>
